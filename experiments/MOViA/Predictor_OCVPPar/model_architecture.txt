@@ -1,0 +1,84 @@
+Total Params: 4279680
+
+Params: 4279680
+OCVTransformerV2Predictor(
+  (mlp_in): Linear(in_features=128, out_features=256, bias=True)
+  (mlp_out): Linear(in_features=256, out_features=128, bias=True)
+  (transformer_encoders): Sequential(
+    (0): ObjectCentricTransformerLayerV2(
+      (self_attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (linear1): Linear(in_features=256, out_features=512, bias=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (linear2): Linear(in_features=512, out_features=256, bias=True)
+      (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (dropout1): Dropout(p=0.1, inplace=False)
+      (dropout2): Dropout(p=0.1, inplace=False)
+      (self_attn_obj): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (self_attn_time): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+    )
+    (1): ObjectCentricTransformerLayerV2(
+      (self_attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (linear1): Linear(in_features=256, out_features=512, bias=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (linear2): Linear(in_features=512, out_features=256, bias=True)
+      (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (dropout1): Dropout(p=0.1, inplace=False)
+      (dropout2): Dropout(p=0.1, inplace=False)
+      (self_attn_obj): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (self_attn_time): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+    )
+    (2): ObjectCentricTransformerLayerV2(
+      (self_attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (linear1): Linear(in_features=256, out_features=512, bias=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (linear2): Linear(in_features=512, out_features=256, bias=True)
+      (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (dropout1): Dropout(p=0.1, inplace=False)
+      (dropout2): Dropout(p=0.1, inplace=False)
+      (self_attn_obj): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (self_attn_time): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+    )
+    (3): ObjectCentricTransformerLayerV2(
+      (self_attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (linear1): Linear(in_features=256, out_features=512, bias=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (linear2): Linear(in_features=512, out_features=256, bias=True)
+      (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (dropout1): Dropout(p=0.1, inplace=False)
+      (dropout2): Dropout(p=0.1, inplace=False)
+      (self_attn_obj): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+      (self_attn_time): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (pe): PositionalEncoding(
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+)

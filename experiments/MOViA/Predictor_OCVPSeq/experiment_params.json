@@ -1,0 +1,102 @@
+{
+  "dataset": {
+    "dataset_name": "MoviA",
+    "shuffle_train": true,
+    "shuffle_eval": false,
+    "use_segmentation": true,
+    "target": "rgb",
+    "random_start": true
+  },
+  "model": {
+    "model_name": "SAVi",
+    "SAVi": {
+      "num_slots": 11,
+      "slot_dim": 128,
+      "in_channels": 3,
+      "encoder_type": "ConvEncoder",
+      "num_channels": [32, 32, 32, 32],
+      "mlp_encoder_dim": 128,
+      "mlp_hidden": 256,
+      "num_channels_decoder": [64, 64, 64, 64],
+      "kernel_size": 5,
+      "num_iterations_first": 3,
+      "num_iterations": 1,
+      "resolution": [64, 64],
+      "downsample_encoder": false,
+      "downsample_decoder": true,
+      "decoder_resolution": [8, 8],
+      "upsample": 2,
+      "use_predictor": true,
+      "initializer": "BBox"
+    },
+    "predictor": {
+      "predictor_name": "OCVP-Seq",
+      "OCVP-Seq": {
+        "token_dim": 256,
+        "hidden_dim": 512,
+        "num_layers": 4,
+        "n_heads": 8,
+        "residual": true,
+        "input_buffer_size": 30
+      }
+    }
+  },
+  "loss": [
+    {
+      "type": "mse",
+      "weight": 1
+    }
+  ],
+  "predictor_loss": [
+    {
+      "type": "pred_img_mse",
+      "weight": 1
+    },
+    {
+      "type": "pred_slot_mse",
+      "weight": 1
+    }
+  ],
+  "training_slots": {
+    "num_epochs": 1500,
+    "save_frequency": 10,
+    "log_frequency": 25,
+    "image_log_frequency": 100,
+    "batch_size": 64,
+    "lr": 0.0002,
+    "optimizer": "adam",
+    "momentum": 0,
+    "weight_decay": 0,
+    "nesterov": false,
+    "scheduler": "cosine_annealing",
+    "lr_factor": 0.5,
+    "patience": 10,
+    "scheduler_steps": 400000,
+    "lr_warmup": true,
+    "warmup_steps": 2500,
+    "warmup_epochs": 200,
+    "gradient_clipping": true,
+    "clipping_max_value": 0.05
+  },
+  "training_prediction": {
+    "num_context": 6,
+    "num_preds": 8,
+    "teacher_force": false,
+    "skip_first_slot": false,
+    "num_epochs": 1500,
+    "train_iters_per_epoch": 10000000000,
+    "save_frequency": 10,
+    "save_frequency_iters": 10000000,
+    "log_frequency": 25,
+    "image_log_frequency": 100,
+    "batch_size": 64,
+    "sample_length": 14,
+    "gradient_clipping": false,
+    "clipping_max_value": 3.0
+  },
+  "_general": {
+    "exp_path": "/home/data/user/villar/ObjectCentricVideoPred/experiments/MoviExps/exp2",
+    "created_time": "2023-01-28_11-34-50",
+    "last_loaded": "2023-02-08_16-32-24"
+  }
+}

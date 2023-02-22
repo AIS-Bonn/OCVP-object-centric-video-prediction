@@ -1,0 +1,7 @@
+Total Params: 264192
+
+Params: 264192
+ModuleList(
+  (0): LSTMCell(128, 128)
+  (1): LSTMCell(128, 128)
+)
