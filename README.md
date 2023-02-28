@@ -131,9 +131,9 @@ Please consider citing our paper if you find our work or our repository helpful.
 
 ```
 @inproceedings{villar_ObjectCentricVideoPrediction_2023,
-  title={Object-Centric Video Prediction via Decoupling <br> of Object Dynamics and Interactions},
+  title={Object-Centric Video Prediction via Decoupling of Object Dynamics and Interactions},
   author={Villar-Corrales, Angel and Wahdan, Ismail and Behnke, Sven},
-  booktitle={TODO},
+  booktitle={arXiv preprint arXiv:2302.11850},
   year={2023}
 }
 ```
