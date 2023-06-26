@@ -16,7 +16,7 @@
 
 
 
-Official implementation of:  **Object-Centric Video Prediction via Decoupling of Object Dynamics and Interactions** by Villar-Corrales et al. [[Paper](http://www.angelvillarcorrales.com/templates/others/Publications/2023_ObjectCentricVideoPrediction_ICIP.pdf)] [[Project Page](https://sites.google.com/view/ocvp-vp)]
+Official implementation of:  **Object-Centric Video Prediction via Decoupling of Object Dynamics and Interactions** by Villar-Corrales et al. ICIP 2023. [[Paper](http://www.angelvillarcorrales.com/templates/others/Publications/2023_ObjectCentricVideoPrediction_ICIP.pdf)] [[Project Page](https://sites.google.com/view/ocvp-vp)]
 
 
 
@@ -28,7 +28,7 @@ We refer to [docs/INSTALL.md](https://github.com/AIS-Bonn/OCVP-object-centric-vi
 
 ## Training
 
-We refer to [docs/TRAIN.md](https://github.com/AIS-Bonn/OCVP-object-centric-video-prediction/blob/master/assets/docs/TRAIN.md) for detailed instructions for training your own Object-Centric Video Decomposition model.
+We refer to [docs/TRAIN.md](https://github.com/AIS-Bonn/OCVP-object-centric-video-prediction/blob/master/assets/docs/TRAIN.md) for detailed instructions for training your own Object-Centric Video Decomposition model. Additonally, we report the required training time for both the SAVi scene decomposition, as well as the OCVP-Seq predictor module.
 
 
 
@@ -133,7 +133,7 @@ Please consider citing our paper if you find our work or our repository helpful.
 @inproceedings{villar_ObjectCentricVideoPrediction_2023,
   title={Object-Centric Video Prediction via Decoupling <br> of Object Dynamics and Interactions},
   author={Villar-Corrales, Angel and Wahdan, Ismail and Behnke, Sven},
-  booktitle={TODO},
+  booktitle={Internation Conference on Image Processing (ICIP)},
   year={2023}
 }
 ```

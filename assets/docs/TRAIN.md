@@ -107,6 +107,17 @@ python src/04_train_predictor.py \
   --name_predictor_experiment my_OCVPSeq_model
 ```
 
+## Training Time
+
+The table below summarizes the amout of epochs, hours and iterations (batches) required to train both the SAVi scene parsing module, as well as our OCVP-Seq predictor.
+These values correspond to experiments trained with an NVIDIA A6000 with 48Gb.
+
+| Dataset | Model | Iters.  | Epochs | Time |
+| --- | --- | --- | --- | --- |
+| Ojb3D | SAVi | 100k | 2000 | 26h |
+|Obj3D | OCVP-Seq | 70k | 1500 | 34h |
+|MOVi-A |SAVi | 150k | 2000| 120h |
+|MOVi-A | OCVP-Seq | 50k | 300 | 18h |
 
 
 ## Further Comments
