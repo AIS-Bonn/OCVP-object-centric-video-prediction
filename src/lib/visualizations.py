@@ -165,6 +165,8 @@ def visualize_recons(imgs, recons, savepath=None,  tag="recons", n_cols=10, tb_w
     if tb_writer is not None:
         tb_writer.add_images(fig_name=f"{tag}_imgs", img_grid=np.array(imgs), step=iter)
         tb_writer.add_images(fig_name=f"{tag}_recons", img_grid=np.array(recons), step=iter)
+
+    plt.close(fig)
     return
 
 
@@ -185,6 +187,7 @@ def visualize_img_err(img, reconstructions):
 
     plt.tight_layout()
     plt.show()
+    plt.close()
     return
 
 
@@ -303,6 +306,8 @@ def visualize_frame_predictions(context_imgs, pred_imgs, target_imgs, tb_writer=
                     img_grid=np.array(pred_imgs.cpu().detach()),
                     step=step
                 )
+
+    plt.close(fig)
     return
 
 
@@ -521,6 +526,8 @@ def visualize_metric(vals, start_x=0, title=None, xlabel=None, savepath=None, **
     plt.tight_layout()
     if savepath is not None:
         plt.savefig(savepath)
+
+    plt.close(fig)
     return
 
 

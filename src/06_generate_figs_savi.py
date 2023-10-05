@@ -3,6 +3,8 @@ Generating figures using a pretrained SAVI model
 """
 
 import os
+
+import matplotlib.pyplot as plt
 import torch
 
 from base.baseFigGenerator import BaseFigGenerator
@@ -70,30 +72,33 @@ class FigGenerator(BaseFigGenerator):
             )
 
         savepath = os.path.join(self.plots_path, cur_dir, f"Objects_{img_idx+1}.png")
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 individual_recons_history[0, :N],
                 savepath=savepath,
                 vmin=0,
                 vmax=1,
             )
+        plt.close(fig)
 
         savepath = os.path.join(self.plots_path, cur_dir, f"masks_{img_idx+1}.png")
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 masks_history[0][:N],
                 savepath=savepath,
                 cmap="gray_r",
                 vmin=0,
                 vmax=1,
             )
+        plt.close(fig)
         savepath = os.path.join(self.plots_path, cur_dir, f"maskedObj_{img_idx+1}.png")
         recon_combined = masks_history[0][:N] * individual_recons_history[0][:N]
         recon_combined = torch.clamp(recon_combined, min=0, max=1)
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 recon_combined,
                 savepath=savepath,
                 vmin=0,
                 vmax=1,
             )
+        plt.close(fig)
         return
 
 

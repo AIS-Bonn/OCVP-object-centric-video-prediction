@@ -2,6 +2,9 @@
 Training and Validating a SAVi video decomposition model
 """
 
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')  # for avoiding memory leak
 import torch
 
 from data.load_data import unwrap_batch_data
@@ -105,7 +108,7 @@ class Trainer(BaseTrainer):
             )
 
         # Rendered individual objects
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 individual_recons_history[0][:N].clamp(0, 1),
                 savepath=None,
                 tag="objects_decomposed",
@@ -114,9 +117,10 @@ class Trainer(BaseTrainer):
                 tb_writer=self.writer,
                 iter=iter_
             )
+        plt.close(fig)
 
         # Rendered individual object masks
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 masks_history[0][:N].clamp(0, 1),
                 savepath=None,
                 tag="masks",
@@ -126,10 +130,11 @@ class Trainer(BaseTrainer):
                 tb_writer=self.writer,
                 iter=iter_,
             )
+        plt.close(fig)
 
         # Rendered individual combination of an object with its masks
         recon_combined = masks_history[0][:N] * individual_recons_history[0][:N]
-        _ = visualize_decomp(
+        fig, _, _ = visualize_decomp(
                 recon_combined.clamp(0, 1),
                 savepath=None,
                 tag="reconstruction_combined",
@@ -138,6 +143,7 @@ class Trainer(BaseTrainer):
                 tb_writer=self.writer,
                 iter=iter_
             )
+        plt.close(fig)
         return
 
 

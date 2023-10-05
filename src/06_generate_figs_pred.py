@@ -3,6 +3,8 @@ Generating some figures using a pretrained SAVi model and the corresponding pred
 """
 
 import os
+
+import matplotlib.pyplot as plt
 from tqdm import tqdm
 import numpy as np
 import torch
@@ -193,10 +195,11 @@ class FigGenerator(BaseFigGenerator):
         pred_objs = add_border(pred_objs * pred_masks, color_name="red", pad=2)
         pred_objs = pred_objs.reshape(B, num_preds, num_slots, *pred_objs.shape[-3:])
         all_objs = torch.cat([seed_objs, pred_objs], dim=1)
-        _ = visualize_aligned_slots(
+        fig, _ = visualize_aligned_slots(
                 all_objs[0],
                 savepath=os.path.join(self.plots_path, cur_dir, "aligned_slots.png")
             )
+        plt.close(fig)
 
         # Video predictions
         fig, ax = visualize_qualitative_eval(
@@ -205,12 +208,14 @@ class FigGenerator(BaseFigGenerator):
                 preds=pred_imgs[0],
                 savepath=os.path.join(self.plots_path, cur_dir, "qual_eval_rgb.png")
             )
+        plt.close(fig)
         fig, ax = visualize_qualitative_eval(
                 context=seed_imgs[0],
                 targets=target_imgs[0],
                 preds=pred_imgs[0],
                 savepath=os.path.join(self.plots_path, cur_dir, "qual_eval.png")
             )
+        plt.close(fig)
         fig, ax = visualize_tight_row(
                 frames=videos[0],
                 num_context=num_context,
@@ -218,6 +223,7 @@ class FigGenerator(BaseFigGenerator):
                 is_gt=True,
                 savepath=os.path.join(self.plots_path, cur_dir, "row_rgb_gt.png")
             )
+        plt.close(fig)
         fig, ax = visualize_tight_row(
                 frames=pred_imgs[0],
                 num_context=num_context,
@@ -225,6 +231,7 @@ class FigGenerator(BaseFigGenerator):
                 is_gt=False,
                 savepath=os.path.join(self.plots_path, cur_dir, "row_rgb_pred.png")
             )
+        plt.close(fig)
 
         # masks
         seed_masks_categorical = seed_masks[0, :num_context].argmax(dim=1)
@@ -242,6 +249,7 @@ class FigGenerator(BaseFigGenerator):
                 is_gt=True,
                 savepath=os.path.join(self.plots_path, cur_dir, "row_masks.png")
             )
+        plt.close(fig)
 
         # overlay masks
         masks_categorical_channels = idx_to_one_hot(x=all_masks_categorical[:, 0])
@@ -258,6 +266,7 @@ class FigGenerator(BaseFigGenerator):
                 is_gt=True,
                 savepath=os.path.join(self.plots_path, cur_dir, "row_overlay.png")
             )
+        plt.close(fig)
 
         # Sequence GIFs
         gt_frames = torch.cat([seed_imgs, target_imgs], dim=1)
