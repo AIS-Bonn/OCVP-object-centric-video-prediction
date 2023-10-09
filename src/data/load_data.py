@@ -95,6 +95,7 @@ def unwrap_batch_data(exp_params, batch_data):
     Unwrapping the batch data depending on the dataset that we are training on
     """
     initializer_kwargs = {}
+    condition = None
     if exp_params["dataset"]["dataset_name"] in ["OBJ3D"]:
         videos, targets, _ = batch_data
     elif exp_params["dataset"]["dataset_name"] in ["MoviA", "MoviC"]:
@@ -107,7 +108,7 @@ def unwrap_batch_data(exp_params, batch_data):
     else:
         dataset_name = exp_params["dataset"]["dataset_name"]
         raise NotImplementedError(f"Dataset {dataset_name} is not supported...")
-    return videos, targets, initializer_kwargs
+    return videos, targets, condition, initializer_kwargs
 
 
 def unwrap_batch_data_masks(exp_params, batch_data):
@@ -118,6 +119,7 @@ def unwrap_batch_data_masks(exp_params, batch_data):
     dbs = ["MoviA", "MoviC"]
     dataset_name = exp_params["dataset"]["dataset_name"]
     initializer_kwargs = {}
+    condition = None
     if dataset_name in ["MoviA", "MoviC"]:
         videos, _, all_reps = batch_data
         masks = all_reps["masks"]
@@ -126,7 +128,7 @@ def unwrap_batch_data_masks(exp_params, batch_data):
         initializer_kwargs["bbox_coords"] = all_reps["bbox_coords"]
     else:
         raise ValueError(f"Only {dbs} support object-based mask evaluation. Given {dataset_name = }")
-    return videos, masks, initializer_kwargs
+    return videos, masks, condition, initializer_kwargs
 
 
 #

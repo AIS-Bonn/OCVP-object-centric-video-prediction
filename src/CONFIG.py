@@ -29,8 +29,8 @@ METRICS = [
         "mse", "psnr", "ssim", "lpips"      # video predicition metrics
     ]
 MODELS = ["SAVi"]
-PREDICTORS = ["LSTM", "Transformer", "OCVP-Seq", "OCVP-Par"]
-INITIALIZERS = ["Random", "LearnedRandom", "Masks", "CoM", "BBox"]
+PREDICTORS = ["LSTM", "Transformer", "OCVP-Seq", "OCVP-Par", "CondTransformer"]
+INITIALIZERS = ["Random", "LearnedRandom", "Learned", "Masks", "CoM", "BBox"]
 
 DEFAULTS = {
     "dataset": {
@@ -88,6 +88,15 @@ DEFAULTS = {
                 "input_buffer_size": None
             },
             "OCVP-Par": {
+                "token_dim": 128,
+                "hidden_dim": 256,
+                "num_layers": 2,
+                "n_heads": 4,
+                "residual": True,
+                "input_buffer_size": None
+            },
+            "CondTransformer": {
+                "cond_dim": 4,
                 "token_dim": 128,
                 "hidden_dim": 256,
                 "num_layers": 2,

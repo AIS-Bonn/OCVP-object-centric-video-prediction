@@ -120,6 +120,20 @@ def setup_predictor(exp_params):
                 residual=cur_predictor_params.get("residual", False),
                 input_buffer_size=cur_predictor_params.get("input_buffer_size", num_seed)
             )
+    elif(predictor_name == "CondTransformer"):
+        num_seed = train_pred_params["num_context"]
+        predictor = predictors.CondTransformerPredictor(
+                num_slots=cur_model_params["num_slots"],
+                slot_dim=cur_model_params["slot_dim"],
+                num_imgs=train_pred_params["sample_length"],
+                token_dim=cur_predictor_params["token_dim"],
+                hidden_dim=cur_predictor_params["hidden_dim"],
+                cond_dim=cur_predictor_params["cond_dim"],
+                num_layers=cur_predictor_params["num_layers"],
+                n_heads=cur_predictor_params["n_heads"],
+                residual=cur_predictor_params.get("residual", False),
+                input_buffer_size=cur_predictor_params.get("input_buffer_size", num_seed)
+            )
     else:
         raise NotImplementedError(f"Predictor '{predictor_name}' not in recognized predictors: {PREDICTORS}")
 

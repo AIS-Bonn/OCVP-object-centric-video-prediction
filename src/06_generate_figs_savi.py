@@ -46,7 +46,7 @@ class FigGenerator(BaseFigGenerator):
         """
         Computing visualization
         """
-        videos, targets, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
+        videos, targets, _, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
         videos, targets = videos.to(self.device), targets.to(self.device)
         out_model = self.model(videos, num_imgs=videos.shape[1], **initializer_kwargs)
         slot_history, reconstruction_history, individual_recons_history, masks_history = out_model

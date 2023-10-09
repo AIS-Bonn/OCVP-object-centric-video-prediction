@@ -50,8 +50,10 @@ class Trainer(BasePredictorTrainer):
         slot_dim = self.model.slot_dim
 
         # fetching and checking data
-        videos, targets, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
+        videos, targets, condition, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
         videos, targets = videos.to(self.device), videos.to(self.device)
+        if condition is not None:
+            condition = condition.to(self.device)
         B, L, C, H, W = videos.shape
         if L < num_context + num_preds:
             raise ValueError(f"Seq. length {L} smaller that #seed {num_context} + #preds {num_preds}")
@@ -61,7 +63,7 @@ class Trainer(BasePredictorTrainer):
             out_model = self.model(videos, num_imgs=video_length, **initializer_kwargs)
             slot_history, reconstruction_history, individual_recons_history, masks_history = out_model
         # predicting future slots
-        pred_slots = self.predictor(slot_history)
+        pred_slots = self.predictor(slot_history) if condition is None else self.predictor(slot_history, condition)
         # rendering future objects and frames from predicted object slots
         pred_slots_decode = pred_slots.clone().reshape(B * num_preds, num_slots, slot_dim)
         img_recons, (pred_recons, pred_masks) = self.model.decode(pred_slots_decode)
@@ -103,7 +105,7 @@ class Trainer(BasePredictorTrainer):
         num_preds = self.exp_params["training_prediction"]["num_preds"]
 
         # forward pass
-        videos, targets, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
+        videos, targets, _, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
         out_model, _ = self.forward_loss_metric(
                 batch_data=batch_data,
                 training=False,

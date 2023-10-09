@@ -54,7 +54,7 @@ class Evaluator(BaseEvaluator):
         pred_data: dict
             Predictions from the model for the current batch of data
         """
-        videos, masks, initializer_kwargs = unwrap_batch_data_masks(self.exp_params, batch_data)
+        videos, masks, _, initializer_kwargs = unwrap_batch_data_masks(self.exp_params, batch_data)
         videos, masks = videos.to(self.device), masks.to(self.device)
         out_model = self.model(
                 videos,

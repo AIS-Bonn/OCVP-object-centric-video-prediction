@@ -96,8 +96,10 @@ class FigGenerator(BaseFigGenerator):
 
         for idx in tqdm(range(self.num_seqs)):
             batch_data = self.test_set[idx]
-            videos, targets, initializer_data = unwrap_batch_data(self.exp_params, batch_data)
+            videos, targets, condition, initializer_data = unwrap_batch_data(self.exp_params, batch_data)
             videos, targets = videos.unsqueeze(0).to(self.device), targets.unsqueeze(0).to(self.device)
+            if condition is not None:
+              condition = condition.unsqueeze(0).to(self.device)
             initializer_data = {k: v.unsqueeze(0) for k, v in initializer_data.items() if torch.is_tensor(v)}
 
             n_frames = videos.shape[1]
@@ -105,7 +107,7 @@ class FigGenerator(BaseFigGenerator):
                 raise ValueError(f"Seq. length {n_frames} smaller that {num_context = } + {num_preds = }")
 
             # forward pass through object-centric prediction model
-            out_model = self.forward_pass(videos, video_length, initializer_data)
+            out_model = self.forward_pass(videos, condition, video_length, initializer_data)
             pred_imgs, pred_recons, pred_masks, individual_recons_history, masks_history = out_model
 
             # computing metrics for sequence to visualize
@@ -134,7 +136,7 @@ class FigGenerator(BaseFigGenerator):
         return
 
     @torch.no_grad()
-    def forward_pass(self, videos, video_length, initializer_data):
+    def forward_pass(self, videos, condition, video_length, initializer_data):
         """
         Forward pass through SAVi and Preditor
         """
@@ -147,7 +149,7 @@ class FigGenerator(BaseFigGenerator):
         slot_history, recons_history, individual_recons_history, masks_history = out_model
 
         # predicting future slots
-        pred_slots = self.predictor(slot_history)
+        pred_slots = self.predictor(slot_history) if condition is None else self.predictor(slot_history, condition)
         # decoding predicted slots into predicted frames
         pred_slots_decode = pred_slots.clone().reshape(B * num_preds, num_slots, slot_dim)
         img_recons, (pred_recons, pred_masks) = self.model.decode(pred_slots_decode)

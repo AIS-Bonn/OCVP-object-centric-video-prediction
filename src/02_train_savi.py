@@ -42,7 +42,7 @@ class Trainer(BaseTrainer):
         loss: torch.Tensor
             Total loss for the current batch
         """
-        videos, targets, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
+        videos, targets, _, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
 
         # forward pass
         videos, targets = videos.to(self.device), targets.to(self.device)
@@ -79,7 +79,7 @@ class Trainer(BaseTrainer):
         if(iter_ % self.exp_params["training_slots"]["image_log_frequency"] != 0):
             return
 
-        videos, targets, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
+        videos, targets, _, initializer_kwargs = unwrap_batch_data(self.exp_params, batch_data)
         out_model, _ = self.forward_loss_metric(
                 batch_data=batch_data,
                 training=False,

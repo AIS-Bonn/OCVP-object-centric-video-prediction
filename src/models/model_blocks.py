@@ -247,5 +247,22 @@ class PositionalEncoding(nn.Module):
         y = self.dropout(x)
         return y
 
+    def forward_cond(self, x, batch_size):
+        """
+        Adding the positional encoding to the input condition input token of the transformer
+
+        Args:
+        -----
+        x: torch Tensor
+            Token to enhance with positional encoding. Shape is (B, Token_Dim)
+        batch_size: int
+            Given batch size to repeat the positional encoding for
+        """
+        if x.device != self.pe.device:
+            self.pe = self.pe.to(x.device)
+        cur_pe = self.pe.repeat(batch_size, 1, 1, 1)[:, -1].squeeze()
+        x = x + cur_pe
+        y = self.dropout(x)
+        return y
 
 #
