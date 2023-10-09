@@ -4,7 +4,7 @@ Methods for loading specific datasets, fitting data loaders and other
 
 # from torchvision import datasets
 from torch.utils.data import DataLoader
-from data import OBJ3D, MOVI
+from data import OBJ3D, MOVI, RobotDataset
 from CONFIG import CONFIG, DATASETS
 
 
@@ -51,6 +51,12 @@ def load_data(exp_params, split="train"):
                 random_start=exp_params["dataset"].get("random_start", False),
                 slot_initializer=exp_params["model"]["SAVi"].get("initializer", "LearnedRandom")
             )
+    elif "Robot-dataset" in dataset_name:
+        dataset = RobotDataset(
+                mode=split,
+                dataset_name=dataset_name,
+                sample_length=exp_params["training_prediction"]["sample_length"]
+            )
     else:
         raise NotImplementedError(
                 f"""ERROR! Dataset'{dataset_name}' is not available.
@@ -96,6 +102,8 @@ def unwrap_batch_data(exp_params, batch_data):
         initializer_kwargs["instance_masks"] = all_reps["masks"]
         initializer_kwargs["com_coords"] = all_reps["com_coords"]
         initializer_kwargs["bbox_coords"] = all_reps["bbox_coords"]
+    elif "Robot-dataset" in exp_params["dataset"]["dataset_name"]:
+      videos, targets, condition, _ = batch_data
     else:
         dataset_name = exp_params["dataset"]["dataset_name"]
         raise NotImplementedError(f"Dataset {dataset_name} is not supported...")

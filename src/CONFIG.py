@@ -18,7 +18,7 @@ CONFIG = {
 
 
 # Supported datasets, models, metrics, and so on
-DATASETS = ["OBJ3D", "MoviA", "MoviC"]
+DATASETS = ["OBJ3D", "MoviA", "MoviC", "ReachSpecificTarget_0Distractors_LargeTargets_DenseReward_DictstateObs_FrontviewViewpointSimplifiedRobot-dataset"]
 LOSSES = [
         "mse", "l2",      # standard losses
         "pred_img_mse",   # ||pred_img - target_img||^2 when predicting future images
