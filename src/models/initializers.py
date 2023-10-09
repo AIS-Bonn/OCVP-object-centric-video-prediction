@@ -33,6 +33,8 @@ def get_initalizer(mode, slot_dim, num_slots, encoder_resolution=None):
         intializer = Random(slot_dim=slot_dim, num_slots=num_slots)
     elif mode == "LearnedRandom":
         intializer = LearnedRandom(slot_dim=slot_dim, num_slots=num_slots)
+    elif mode == "Learned":
+        intializer = Learned(slot_dim=slot_dim, num_slots=num_slots)
     elif mode == "Masks":
         raise NotImplementedError("'Masks' initialization is not supported...")
     elif mode == "CoM":
@@ -96,6 +98,34 @@ class LearnedRandom(nn.Module):
         sigma = self.slots_sigma.expand(batch_size, self.num_slots, -1)
         slots = mu + sigma * torch.randn(mu.shape, device=self.slots_mu.device)
         return slots
+
+
+class Learned(nn.Module):
+    """
+    Learned intialization.
+    For each slot a discrete initialization is learned via backpropagation.
+    """
+
+    def __init__(self, slot_dim, num_slots):
+        """ Module intializer """
+        super().__init__()
+        self.slot_dim = slot_dim
+        self.num_slots = num_slots
+
+        self.initial_slots = torch.nn.ParameterList(torch.nn.Parameter(torch.randn(1, 1, self.slot_dim)) for _ in range(self.num_slots))
+
+        with torch.no_grad():
+            limit = sqrt(6.0 / (1 + slot_dim))
+            for i in range(num_slots):
+                torch.nn.init.uniform_(self.initial_slots[i], -limit, limit)
+        return
+
+    def forward(self, batch_size, **kwargs):
+        """
+        Return learned slot initializations
+        """
+        slot_list = [self.initial_slots[i].expand(batch_size, 1, -1) for i in range(self.num_slots)]
+        return torch.cat(slot_list, dim=1)
 
 
 class CoordInit(nn.Module):
