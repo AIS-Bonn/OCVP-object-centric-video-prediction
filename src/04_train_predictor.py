@@ -2,7 +2,9 @@
 Training and Validation of an object-centric predictor module using a frozen and pretrained
 SAVI video decomposition model
 """
-
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')  # for avoiding memory leak
 import torch
 
 from data.load_data import unwrap_batch_data
@@ -121,15 +123,17 @@ class Trainer(BasePredictorTrainer):
                 savepath=None
             )
             self.writer.add_figure(tag=f"Qualitative Eval {k+1}", figure=fig, step=epoch + 1)
+            plt.close(fig)
 
             objs = pred_masks[k*num_preds:(k+1)*num_preds] * pred_recons[k*num_preds:(k+1)*num_preds]
-            _ = visualize_decomp(
+            fig, _, _ = visualize_decomp(
                     objs.clamp(0, 1),
                     savepath=None,
                     tag=f"Pred. Object Recons. {k+1}",
                     tb_writer=self.writer,
                     iter=epoch
                 )
+            plt.close(fig)
         return
 
 
